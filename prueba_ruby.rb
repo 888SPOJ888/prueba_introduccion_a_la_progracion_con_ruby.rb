@@ -1,20 +1,27 @@
-require "uri"
-require "net/http"
+require 'uri' 
+require 'net/http'
+require 'openssl'
 require 'json'
 
-def request(address)
-    url = URI(address)
-    url = URI("https://jsonplaceholder.typicode.com/posts")
-    https = Net::HTTP.new(url.host, url.port);
-    https.use_ssl = true
+def request(url_requested) 
+    url = URI(url_requested)
+    http = Net::HTTP.new(url.host, url.port) 
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(url)
-    request["Cookie"] = "__cfduid=df87f96a76cb2da0fcb5c3914fb71a3191594607495"
-
-    response = https.request(request)
-    JSON.parse response.read_body
-    end
-    
-    body = request("https://jsonplaceholder.typicode.com/posts")
-    body.each do |post|
-    puts post['title']
+    request["app_id"] = ''
+    request["app_key"] = '' 
+    response = http.request(request)
+    return JSON.parse(response.body)
 end
+info = request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&', 'api_key=ZJ2ZBVN4z4BhxoNPmILVaAh12jMiyCGBr8gMlPEw')
+def build_web_page(info)
+    output = "<html>\n/<head>\n</head>\n<body>\n<ul>"
+    info.each do |img|
+        output += "\t<li><img src=#{img["img_src"]}\"></li>\n"
+    end
+    output += "</ul>\n</body>\n</html>"
+    File.write('NASA.html', output)
+    
+end
+create_web_page(data)
