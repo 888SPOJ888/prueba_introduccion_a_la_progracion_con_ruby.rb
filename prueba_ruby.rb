@@ -9,19 +9,14 @@ def request(url_requested)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(url)
-    request["app_id"] = ''
-    request["app_key"] = '' 
+    request["app_id"] = '3cb74d10-8031-43c4-afa9-c3b4393ff4fa '
+    request["app_key"] = 'ZJ2ZBVN4z4BhxoNPmILVaAh12jMiyCGBr8gMlPEw' 
     response = http.request(request)
     return JSON.parse(response.body)
 end
-info = request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&', 'api_key=ZJ2ZBVN4z4BhxoNPmILVaAh12jMiyCGBr8gMlPEw')
-def build_web_page(info)
-    output = "<html>\n/<head>\n</head>\n<body>\n<ul>"
-    info.each do |img|
-        output += "\t<li><img src=#{img["img_src"]}\"></li>\n"
-    end
-    output += "</ul>\n</body>\n</html>"
-    File.write('NASA.html', output)
-    
-end
-create_web_page(data)
+
+body = request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=ZJ2ZBVN4z4BhxoNPmILVaAh12jMiyCGBr8gMlPEw') 
+
+new_array = body["photos"]
+values = (new_array.map {|photos| [photos["img_src"]]})
+values2 = (new_array.map {|photos| [photos["camera"]]})
