@@ -22,13 +22,13 @@ values = (new_array.map {|photos| [photos["img_src"]]})
 values2 = (new_array.map {|photos| [photos["camera"]]})
 
 def build_web_page(array)
-    output = "\n<html>\n\t<head>\n\t</head>\n\t<body>\n\t\t<ul>\n"
+    output = "\n<html>\n<head>\n</head>\n<body>\n<ul>\n"
     array.each do |photo|
         photo.each do |ele|
-            output += "\t\t\t<li><img src=#{ele} /> </li>\n"
+            output += "\t<li><img src=#{ele} /> </li>\n"
         end
     end
-    output += "\t\t</ul>\n\t</body>\n</html>"
+    output += "</ul>\n</body>\n</html>"
     File.write('curiosity.html', output)
     
 end
