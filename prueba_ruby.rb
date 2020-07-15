@@ -47,3 +47,11 @@ def photos_count(count)
             end
         end
     end
+    grouped_camera = final_array.group_by {|x| x}
+    grouped_camera.each do |k, v|
+        grouped_camera[k] = v.count
+    end
+    print grouped_camera
+end
+
+photos_count(values2)
