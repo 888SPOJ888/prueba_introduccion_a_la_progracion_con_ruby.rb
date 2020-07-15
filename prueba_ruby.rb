@@ -20,3 +20,15 @@ body = request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?
 new_array = body["photos"]
 values = (new_array.map {|photos| [photos["img_src"]]})
 values2 = (new_array.map {|photos| [photos["camera"]]})
+
+def build_web_page(array)
+    output = "\n<html>\n\t<head>\n\t</head>\n\t<body>\n\t\t<ul>\n"
+    array.each do |photo|
+        photo.each do |ele|
+            output += "\t\t\t<li><img src=#{ele} /> </li>\n"
+        end
+    end
+    output += "\t\t</ul>\n\t</body>\n</html>"
+    File.write('curiosity.html', output)
+    
+end
