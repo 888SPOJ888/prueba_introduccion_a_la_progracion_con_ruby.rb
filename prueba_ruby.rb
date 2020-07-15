@@ -32,3 +32,18 @@ def build_web_page(array)
     File.write('curiosity.html', output)
     
 end
+build_web_page(values)
+
+def photos_count(count)
+    new_hash = {}
+    final_array = []
+    count.each do |camera|
+        camera.each do |ele|
+            ele.each do |k, v|
+                if k == "full_name"
+                    new_hash[k] = v
+                    final_array += new_hash.values
+                end
+            end
+        end
+    end
